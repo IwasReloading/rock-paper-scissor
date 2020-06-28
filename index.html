@@ -4,17 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-    <script>
+    <div class="container">
+      <header >
+        <h1>Rock-Paper-Scissor</h1>
+      </header>
+      <center class="msg">
+        <p class='win-msg'>---------</p>
+      </center>
+      <center>
+        <button id="rock"> Rock </button>
+        <button id="paper"> Paper </button>
+        <button id="scissor"> Scissor </button>
+      </center>
+    </div>
+    <script type="text/javascript">
+        const para = document.querySelector('.win-msg')
+
+        const buttons = document.querySelectorAll('button');
+
         function computerPlay() {
             let gameWords = ['Rock','Paper','Scissor'];
             let randInt = Math.floor(Math.random() * 3);
             return gameWords[randInt];
         }
+
         function playRound(playerSelection, computerSelection) {
             if (playerSelection == computerSelection) {
-                return "Draw";
+                return ["Draw",0,0];
             } else if (playerSelection == 'rock') {
                 if (computerSelection == 'paper') {
                     return ["You Lose, Paper beats Rock",0,1];
@@ -37,30 +56,18 @@
                 return "";
             }
         }
-        function game() {
-            console.log ("Rock Paper Scissor");
-            let playerWinCount = 0, computerWinCount = 0;
-            while ((playerWinCount != 3) && (computerWinCount != 3)) {
-                let playerSelection = prompt("Enter the Choice").toLowerCase();
-                let computerSelection =  computerPlay().toLowerCase();
-                let result = playRound(playerSelection, computerSelection);
-                if (result != 'Draw') {
-                    playerWinCount += Number(result[1]);
-                    computerWinCount += Number(result[2]);
-                    console.log(result[0]);
-                } else {
-                    console.log(result);
-                }
-            }
-            if (playerWinCount == 3) {
-                console.log('Player Won');
-                alert("Congratulations, You Won.");
-            } else {
-                console.log('Computer Won');
-                alert("You are a loser, Die in Hell.");
-            }
-            playerWinCount = computerWinCount = 0;
+
+        function buttonclick(str) {
+          let playerSelection = str.toLowerCase();
+          let computerSelection =  computerPlay().toLowerCase();
+          let result = playRound(playerSelection, computerSelection);
+          para.textContent = result[0];
         }
+        buttons.forEach((button) => {
+            button.addEventListener('click', (e) => {
+                buttonclick(button.id);
+            })
+        })    
     </script>
 </body>
 </html>
