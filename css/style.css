@@ -11,6 +11,7 @@ header {
 
 p {
     font-size: 25px;
+    text-align: center;
 }
 
 button {
@@ -23,4 +24,17 @@ button {
     padding: 5px 30px 5px 30px;
     border-width: .39vh;
 
+}
+
+.score {
+  margin-top: 10px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.hidden{
+    display: none!important;
 }

@@ -12,7 +12,7 @@
         <h1>Rock-Paper-Scissor</h1>
       </header>
       <center class="msg">
-        <p class='win-msg'>---------</p>
+        <p class='win-msg'>Lets Play....</p>
       </center>
       <center>
         <button id="rock"> Rock </button>
@@ -20,10 +20,25 @@
         <button id="scissor"> Scissor </button>
       </center>
     </div>
-    <script type="text/javascript">
-        const para = document.querySelector('.win-msg')
+    <div class ="score">
+        <p class="pwin">Player Wins:</p>
+        <p class="cwin">Computer Wins:</p>
+        <p id="win-status" class="win-status">**************</p>
+        <center><button id="restart" class="center">Restart</button></center>
+    </div>
 
+    <script type="text/javascript">
+        const msg = document.querySelector('.win-msg')
         const buttons = document.querySelectorAll('button');
+        const pwin = document.querySelector('.pwin')
+        const cwin = document.querySelector('.cwin')
+        const winStatus = document.querySelector('.win-status');
+        document.getElementById("restart").classList.add("hidden");
+        document.getElementById("win-status").classList.add("hidden");
+
+        let playerWin = 0;
+        let computerWin = 0;
+
 
         function computerPlay() {
             let gameWords = ['Rock','Paper','Scissor'];
@@ -57,17 +72,38 @@
             }
         }
 
-        function buttonclick(str) {
-          let playerSelection = str.toLowerCase();
-          let computerSelection =  computerPlay().toLowerCase();
-          let result = playRound(playerSelection, computerSelection);
-          para.textContent = result[0];
+        function game(str) {
+            if (str == "restart") window.location.reload();
+            let playerSelection = str.toLowerCase();
+            let computerSelection =  computerPlay().toLowerCase();
+            let result = playRound(playerSelection, computerSelection);
+            msg.textContent = result[0];
+            pwin.textContent = `Player Wins: ${playerWin += result[1]}`
+            cwin.textContent = `Computer Wins: ${computerWin += result[2]}` 
+            if (playerWin == 5 || computerWin == 5) {
+                if (playerWin == 5) {
+                    disableBtn();
+                    winStatus.textContent = "Congratulations, You won";
+                } else {
+                    disableBtn();
+                    winStatus.textContent = "You are a loser,  Go Fuck yourself.";
+                }
+            }
         }
+
+        function disableBtn() {
+            document.getElementById("restart").classList.remove("hidden");
+            document.getElementById("win-status").classList.remove("hidden");
+            document.getElementById("rock").classList.add("hidden");
+            document.getElementById("paper").classList.add("hidden");
+            document.getElementById("scissor").classList.add("hidden");
+        }
+
         buttons.forEach((button) => {
             button.addEventListener('click', (e) => {
-                buttonclick(button.id);
+                game(button.id);
             })
-        })    
+        }) 
     </script>
 </body>
 </html>
